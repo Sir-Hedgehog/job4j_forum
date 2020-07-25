@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Галактический форум</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <style>
+        body {
+            background:
+                    linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+                    linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0,
+                    linear-gradient(27deg, #222 5px, transparent 5px) 0 10px,
+                    linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+                    linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+                    linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+            background-color: #131313;
+            background-size: 20px 20px;
+            font-family: cursive;
+        }
+
+        .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        #blockOfHeader {
+            display: inline;
+        }
+
+        #header {
+            margin: 1.5em 0;
+            text-align: center;
+            color: white;
+            font-family: cursive;
+        }
+
+        nav {
+            background-color: #2e3d38;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-radius: 25px 25px 0 0;
+        }
+
+        nav ul {
+            display: table;
+            padding: 1em 1em;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: table-cell;
+            padding: 0;
+            margin: 0;
+        }
+
+        #pLogin {
+            padding: 0 0 0 1em;
+            width: 56em;
+        }
+
+        #logout {
+            text-align: right;
+        }
+
+        a {
+            margin: 0 1em 0 0;
+            padding: 0;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+        }
+
+        a:hover {
+            text-decoration: none;
+            text-shadow: none;
+            color: white;
+            transition: 0.5s;
+        }
+
+        p {
+            padding: 0;
+            margin: 0;
+            color: white;
+        }
+
+        #spanLogin {
+            font-style: italic;
+        }
+
+        .table {
+            margin-bottom: 3em;
+            border-radius: 0 0 25px 25px;
+        }
+
+        table td, table th {
+            color: white;
+            vertical-align: middle !important;
+        }
+
+        .theme {
+            padding-left: 2em !important;
+        }
+
+        .tdButtons {
+            width: 5em;
+        }
+
+        #contain:last-child {
+            border-bottom: 3px solid #2e3d38;
+        }
+
+        .buttons {
+            color: #fff;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: #2e3d38;
+            padding: 10px;
+            border-radius: 50px;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+            transition: all 0.5s ease 0s;
+            border: 3px solid #2e3d38;
+        }
+
+        .buttons:hover {
+            box-shadow: 0 0 40px -2px rgba(255, 255, 255, 0.6);
+            transition: all 0.5s ease 0s;
+            background-color: #173D1C;
+            text-shadow: none;
+        }
+
+        #update {
+            float: left;
+            margin: 0;
+        }
+
+        #delete {
+            float: right;
+            margin: 0;
+        }
+
+        #update:hover {
+            background-color: #F2B949;
+            border: 3px solid #F2B949;
+        }
+
+        #delete:hover {
+            background-color: #C91F1F;
+            border: 3px solid #C91F1F;
+        }
+    </style>
+    <!--/*@thymesVar id="user" type="ru.job4j.forum.model.User"*/-->
+    <body>
+        <div class="container mt-3">
+            <div id="blockOfHeader" class="row">
+                <h2 id="header">Галактический форум</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li><p id="pLogin">Пользователь: <span id="spanLogin" th:text="${user.username}"></span></p></li>
+                    <li id="logout"><a href="#" th:href="@{/logout}" title='Выход'>Выход</a></li>
+                </ul>
+            </nav>
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="theme" scope="col">Тема</th>
+                            <th scope="col">Описание</th>
+                            <th scope="col">Время создания</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="contain" th:each="post : ${electPosts}">
+                            <td class="theme" th:text="${post.name}" th:value="${post.name}"></td>
+                            <td th:text="${post.description}" th:value="${post.description}"></td>
+                            <td th:text="${post.created}" th:value="${post.created}"></td>
+                            <td class="tdButtons">
+                                <form action="#" th:action="@{/update/} + ${post.id}" th:object="${post.id}" name='update' method='GET'>
+                                    <input type="submit" id="update" class="buttons" value="Изменить"/>
+                                </form>
+                            </td>
+                            <td class="tdButtons">
+                                <form action="#" th:action="@{/delete/} + ${post.id}"  th:object="${post.id}" name='delete' method='GET'>
+                                    <input type="submit" id="delete" class="buttons" value="Удалить"/>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

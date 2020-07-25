@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset='utf-8'/>
+        <title>Галактический форум</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <style>
+        body {
+            background:
+                    linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+                    linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0,
+                    linear-gradient(27deg, #222 5px, transparent 5px) 0 10px,
+                    linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+                    linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+                    linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+            background-color: #131313;
+            background-size: 20px 20px;
+            font-family: cursive;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        #blockOfHeader {
+            display: inline;
+        }
+
+        #header {
+            margin-top: 1em;
+            margin-bottom: 0.8em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 90%;
+        }
+
+        span {
+            color: red;
+            font-size: small;
+            text-align: center;
+            display: block;
+            margin-top: 0.4em;
+            font-family: unset;
+        }
+
+        section {
+            font-size: large;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-group {
+            width: 50%;
+        }
+
+        .buttons {
+            color: white;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: #2e3d38;
+            padding: 20px;
+            border-radius: 50px;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+            transition: all 0.5s ease 0s;
+            border: 3px solid #2e3d38;
+        }
+
+        .buttons:hover {
+            box-shadow: 0 0 40px -2px rgba(255, 255, 255, 0.6);
+            transition: all 0.5s ease 0s;
+            background-color: #173D1C;
+            text-shadow: none;
+        }
+
+        #create {
+            margin: 2em 0 0 0;
+        }
+
+        #create:hover {
+            background-color: #35AD3C;
+            border: 3px solid #35AD3C;
+        }
+    </style>
+    <body>
+        <div class="container">
+            <div class="row pt-2" id="blockOfHeader">
+                <h1 id="header">Новый пост</h1>
+            </div>
+            <form th:action="@{/save}" th:object="${post}" action="#" method="POST">
+                <section>
+                    <div class="form-group">
+                        <label for="name">Введите название темы: </label>
+                        <input th:field="*{name}" type="text" class="form-control" id="name"/>
+                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Введите описание: </label>
+                        <input th:field="*{description}" type="text" class="form-control" id="description"/>
+                        <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description error</span>
+                    </div>
+                    <input type="submit" id="create" class="buttons" value="Создать пост"/>
+                </section>
+            </form>
+        </div>
+    </body>
+</html>

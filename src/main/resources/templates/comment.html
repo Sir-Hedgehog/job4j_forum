@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Обсуждение</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <style>
+        body {
+            background:
+                    linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+                    linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0,
+                    linear-gradient(27deg, #222 5px, transparent 5px) 0 10px,
+                    linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+                    linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+                    linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+            background-color: #131313;
+            background-size: 20px 20px;
+            font-family: cursive;
+            text-align: left;
+        }
+
+        .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        #blockOfHeader {
+            display: inline;
+        }
+
+        #header {
+            margin: 1.5em 0;
+            text-align: center;
+            color: white;
+            font-family: cursive;
+        }
+
+        a {
+            margin: 0 1em 0 0;
+            padding: 0;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+        }
+
+        a:hover {
+            text-decoration: none;
+            text-shadow: none;
+            color: white;
+            transition: 0.5s;
+        }
+
+        p {
+            padding: 0;
+            margin: 0;
+            color: white;
+        }
+
+        .table {
+            margin-bottom: 1.5em;
+            border-radius: 0 0 25px 25px;
+        }
+
+        #theme {
+            padding-right: 3em;
+        }
+
+        thead {
+            border: 2px solid white;
+            display: block;
+            margin-top: 1em;
+            padding: 0 1em;
+        }
+
+        tbody {
+            display: block;
+            margin: 2em 1em 0 1em;
+        }
+
+        .comments {
+            border: 1px solid #7C8080;
+            border-radius: 0 38px;
+            margin-top: 1em;
+            display: block;
+        }
+
+        table td, table th {
+            color: white;
+            border: none !important;
+        }
+
+        #trPostName {
+            border-bottom: 1px solid #7C8080;
+            display: block;
+        }
+
+        #infoOfComment {
+            border-right: 1px solid #7C8080 !important;
+            padding-left: 0;
+            width: 25%;
+        }
+
+        #containOfComment {
+            vertical-align: middle;
+            padding-left: 1.5em;
+            width: 70%;
+        }
+
+        p {
+            margin: 0 1.2em 1.5em 1.2em;
+        }
+
+        label {
+            color: white;
+            margin-left: 1em;
+        }
+
+        #tbodyOfComment {
+            margin: 1em;
+            width: 100%;
+        }
+
+        #containError {
+            color: red;
+            font-size: small;
+            text-align: center;
+            display: block;
+            margin-top: 0.4em;
+            font-family: unset;
+        }
+
+        .buttons {
+            color: #fff;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: #2e3d38;
+            padding: 20px;
+            border-radius: 50px;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+            transition: all 0.5s ease 0s;
+            border: 3px solid #2e3d38;
+        }
+
+        .buttons:hover {
+            box-shadow: 0 0 40px -2px rgba(255, 255, 255, 0.6);
+            transition: all 0.5s ease 0s;
+            background-color: #173D1C;
+            text-shadow: none;
+        }
+
+        #tdOfButton {
+            padding-bottom: 0.75em;
+        }
+
+        #addComment {
+            margin: 0 0 0 2em;
+            vertical-align: middle;
+        }
+
+        #addComment:hover {
+            background-color: #35AD3C;
+            border: 3px solid #35AD3C;
+        }
+    </style>
+    <body>
+        <div class="container mt-3">
+            <div id="blockOfHeader" class="row">
+                <h2 id="header">Обсуждение</h2>
+            </div>
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr id="trPostName">
+                            <th scope="col" id="theme"><span class="spanPostName">Тема:</span></th>
+                            <th scope="col"><span class="spanPostName" th:text="${post.name}"></span></th>
+                        </tr>
+                        <tr>
+                            <th scope="col"><span class="spanPostDescription">Описание:</span></th>
+                            <th scope="col"><span class="spanPostDescription" th:text="${post.description}"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="comments" th:each="comment : ${post.comments}">
+                            <td id="infoOfComment">
+                                <br/>
+                                <p>Автор: <span th:text="${comment.user.username}"></span> </p>
+                                <p>Создан: <span th:text="${comment.created}"></span></p>
+                            </td>
+                            <td id="containOfComment" th:text="${comment.contain}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--/*@thymesVar id="newComment" type="ru.job4j.forum.model.Comment"*/-->
+            <form action="#" th:action="@{/commit}" th:object="${newComment}" name='newComment' method='GET'>
+                <input type="hidden" name="postId" th:field="${post.id}"/>
+                <label for="text">Комментарий: </label>
+                <table>
+                    <tbody id="tbodyOfComment">
+                        <tr>
+                            <td class="tdOfComment">
+                                <div class="form-group">
+                                    <textarea class="form-control" th:field="*{contain}" id="text" cols="89" rows="3" placeholder="Введите текст комментария..."></textarea>
+                                    <span id="containError" th:if="${#fields.hasErrors('contain')}" th:errors="*{contain}">Contain error</span>
+                                </div>
+                            </td>
+                            <td class="tdOfComment" id="tdOfButton">
+                                <input type="submit" id="addComment" class="buttons" value="Сохранить"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </body>
+</html>

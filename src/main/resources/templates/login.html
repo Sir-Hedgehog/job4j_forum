@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset='utf-8'/>
+        <title>Галактический форум</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background:
+                    linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+                    linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0,
+                    linear-gradient(27deg, #222 5px, transparent 5px) 0 10px,
+                    linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+                    linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+                    linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+            background-color: #131313;
+            background-size: 20px 20px;
+            font-family: cursive;
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 15;
+        }
+
+        header {
+            margin-top: 2em;
+        }
+
+        footer {
+            flex-grow: 1;
+        }
+
+        header h1, footer p {
+            color: #fff;
+            text-align: center;
+        }
+
+        header h1 {
+            padding-top: .125rem;
+            padding-bottom: 1em;
+            border-bottom: .125rem solid #fff;
+        }
+
+        h1:first-letter {
+            font-family: cursive;
+            font-size: 120%;
+        }
+
+        footer p {
+            padding-top: 2em;
+            padding-bottom: .125rem;
+            border-top: .125rem solid #fff;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            color: #0081b5;
+            text-transform: uppercase;
+        }
+
+        caption {
+            color: #fff;
+            font-size: larger;
+            font-weight: 300;
+            text-align: center;
+            caption-side: top;
+            background-color: #2e3d38;
+        }
+
+        span {
+            color: #d33;
+        }
+
+        form {
+            border-radius: 10px 10px 10px 10px;
+            border: 1em solid #2e3d38;
+            background-color: #2e3d38;
+        }
+
+        table {
+            background-color: #2e3d38;
+            border: 0.5em solid #2e3d38;
+        }
+
+        table td {
+            padding: 0;
+            margin: 0;
+            border-bottom: 3px solid #2e3d38;
+        }
+
+        tbody {
+            margin-top: 1em;
+        }
+
+        #sendButton {
+            background-color: #2e3d38;
+            color: #fff;
+            border-color: #fff;
+            margin-left: 0.2em;
+            margin-right: 0.2em;
+            padding: 0.1em 0.52em 0.32em 0.52em;
+            font-size: 2.8em;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+            transition: all 0.5s ease 0s;
+        }
+
+        #sendButton:hover {
+            color: #fff;
+            background-color: #35AD3C;
+            box-shadow: 0 0 40px -2px rgba(255, 255, 255, 0.6);
+            transition: all 0.5s ease 0s;
+            text-shadow: none;
+        }
+
+        .text {
+            text-align: right;
+            color: #fff;
+            padding: 8px 6px;
+            background-color: #2e3d38;
+            font-weight: 300;
+        }
+
+        #lastTr {
+            padding-top: 0.5em;
+        }
+
+        #buttons {
+            margin-bottom: 2em;
+        }
+
+        a {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+            text-shadow: none;
+            color: white;
+            transition: 0.5s;
+        }
+    </style>
+    <body>
+        <header>
+            <h1>Паспорт обитателя галактического форума</h1>
+        </header>
+        <section>
+            <form action="#" th:action="@{/login}" name='login' method='POST'>
+                <span th:if="${errorMessage != ''}" th:text="${errorMessage}">Auth error</span>
+                <table cellspacing="0">
+                    <caption>
+                        Аутентификация
+                    </caption>
+                    <tbody>
+                    <tr>
+                        <td class="text">
+                            <label for="login">Логин: </label>
+                        </td>
+                        <td>
+                            <input type="text" name="username" class="form-control" id="login"/>
+                        </td>
+                        <td rowspan="2" id="buttons">
+                            <input id="sendButton" type="submit" name="save" class="btn btn-outline-dark" value="&rarr;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text">
+                            <label for="password">Пароль: </label>
+                        </td>
+                        <td>
+                            <input type="password" name="password" class="form-control" id="password"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" id="lastTr">
+                            <a href="#" th:href="@{/registration}" title='Регистрация'>Регистрация</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            </form>
+        </section>
+        <footer>
+            <p>
+                &copy; Все права защищены
+            </p>
+        </footer>
+    </body>
+</html>
