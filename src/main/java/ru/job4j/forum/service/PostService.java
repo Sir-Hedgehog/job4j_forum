@@ -2,30 +2,41 @@ package ru.job4j.forum.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.Comment;
 import ru.job4j.forum.model.Post;
 import ru.job4j.forum.model.User;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import ru.job4j.forum.repository.AuthorityRepository;
+import ru.job4j.forum.repository.CommentRepository;
+import ru.job4j.forum.repository.PostRepository;
+import ru.job4j.forum.repository.UserRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 25.07.2020
+ * @version 2.0
+ * @since 10.08.2020
  */
 
 @Service
 public class PostService {
-    private static int generatedIdForPost = 0;
-    private static int generatedIdForComment = 0;
-    private final List<Post> posts = new ArrayList<>();
+    private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
+    private final AuthorityRepository authorityRepository;
+    private final UserRepository userRepository;
     private static final Logger LOG = LoggerFactory.getLogger(PostService.class);
+
+    @Autowired
+    public PostService(PostRepository postRepository, CommentRepository commentRepository, AuthorityRepository authorityRepository, UserRepository userRepository) {
+        this.commentRepository = commentRepository;
+        this.postRepository = postRepository;
+        this.authorityRepository = authorityRepository;
+        this.userRepository = userRepository;
+    }
 
     /**
      * Метод получает список всех постов
@@ -33,7 +44,7 @@ public class PostService {
      */
 
     public List<Post> getAll() {
-        return posts;
+        return postRepository.findAll();
     }
 
     /**
@@ -42,10 +53,9 @@ public class PostService {
      */
 
     public void addPost(Post post) {
-        post.setId(++generatedIdForPost);
         post.setUser(this.certainCurrentUser());
-        this.generateTime(post);
-        posts.add(post);
+        post.setCreated(LocalDateTime.now());
+        postRepository.save(post);
     }
 
     /**
@@ -55,15 +65,8 @@ public class PostService {
      */
 
     public Post findById(String id) {
-        Post result = null;
         int parsedId = Integer.parseInt(id);
-        for (Post post : posts) {
-            if (post.getId() == parsedId) {
-                result = post;
-                break;
-            }
-        }
-        return result;
+        return postRepository.findById(parsedId);
     }
 
     /**
@@ -72,14 +75,10 @@ public class PostService {
      */
 
     public void updatePost(Post post) {
-        for (Post element : posts) {
-            if (post.getId() == element.getId()) {
-                element.setName(post.getName());
-                element.setDescription(post.getDescription());
-                this.generateTime(element);
-                break;
-            }
-        }
+        post.setUser(this.certainCurrentUser());
+        post.setCreated(LocalDateTime.now());
+        postRepository.save(post);
+        commentRepository.saveCommentsForUpdatedPost(post.getId());
     }
 
     /**
@@ -88,7 +87,8 @@ public class PostService {
      */
 
     public void deletePost(Post post) {
-        posts.remove(post);
+        commentRepository.deleteCommentsOfPost(post.getId());
+        postRepository.deletePost(post.getId());
     }
 
     /**
@@ -98,39 +98,11 @@ public class PostService {
      */
 
     public void createComment(Post post, Comment comment) {
-        List<Comment> comments;
-        if (post.getComments() == null) {
-            comments = new ArrayList<>();
-        } else {
-            comments = post.getComments();
-        }
-        comment.setId(++generatedIdForComment);
-        this.generateTime(comment);
+        comment.setId(0);
         comment.setUser(this.certainCurrentUser());
-        comments.add(comment);
-        post.setComments(comments);
-    }
-
-    /**
-     * Метод генерирует текущую дату создания поста
-     * @param post - пост
-     */
-
-    private void generateTime(Post post) {
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy ");
-        Date date = new Date();
-        post.setCreated(dateFormat.format(date));
-    }
-
-    /**
-     * Метод генерирует текущую дату создания комментария
-     * @param comment - комментарий
-     */
-
-    private void generateTime(Comment comment) {
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy ");
-        Date date = new Date();
-        comment.setCreated(dateFormat.format(date));
+        comment.setCreated(LocalDateTime.now());
+        comment.setPost(post);
+        commentRepository.save(comment);
     }
 
     /**
@@ -139,10 +111,15 @@ public class PostService {
      */
 
     private User certainCurrentUser() {
+        User electUser = null;
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = new User();
-        user.setUsername(userDetails.getUsername());
-        user.setEnabled(userDetails.isEnabled());
-        return user;
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            if (user.getUsername().equals(userDetails.getUsername())) {
+                electUser = user;
+                break;
+            }
+        }
+        return electUser;
     }
 }

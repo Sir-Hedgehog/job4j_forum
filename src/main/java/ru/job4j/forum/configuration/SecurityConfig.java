@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import javax.sql.DataSource;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
@@ -23,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    DataSource dataSource;
+
     /**
      * Метод сохраняет логин и пароль конкретных пользователей в базу данных
      * @param authentication - аутентификация
@@ -30,11 +34,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected final void configure(AuthenticationManagerBuilder authentication) throws Exception {
-        authentication.inMemoryAuthentication()
-                        .passwordEncoder(passwordEncoder)
-                        .withUser("user").password(passwordEncoder.encode("123456")).roles("USER")
-                        .and()
-                        .withUser("admin").password(passwordEncoder.encode("123456")).roles("USER", "ADMIN");
+        authentication.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select username, password, enabled "
+                        + "from users "
+                        + "where username = ?")
+                .authoritiesByUsernameQuery(" select u.username, a.authority "
+                        + "from authorities as a, users as u "
+                        + "where u.username = ? and u.authority_id = a.id");
     }
 
     /**
@@ -60,6 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/create")
                 .hasAnyRole("ADMIN", "USER")
                 .antMatchers("/user_list")
+                .hasAnyRole("ADMIN", "USER")
+                .antMatchers("/comment/{post_id}")
                 .hasAnyRole("ADMIN", "USER")
                 .and()
                 .formLogin()

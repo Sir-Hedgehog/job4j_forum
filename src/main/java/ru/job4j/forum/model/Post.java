@@ -2,32 +2,45 @@ package ru.job4j.forum.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 25.07.2020
+ * @version 2.0
+ * @since 10.08.2020
  */
 
-@ToString
-@EqualsAndHashCode
+@Entity(name = "Posts")
+@Table(name = "posts")
+@EqualsAndHashCode(exclude = {"user", "comments"})
+@ToString(exclude = {"user", "comments"})
 public class Post {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private int id;
 
-    @Size(min = 5, max = 50, message = "Заголовок поста должен содержать от 5 до 40 символов!")
+    @Size(min = 5, max = 40, message = "Заголовок поста должен содержать от 5 до 40 символов!")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Size(min = 20, message = "Описание поста должно содержать не менее 20 символов!")
+    @Column(name = "description", nullable = false)
     private String description;
 
+    @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    private String created;
+    @Column(name = "created")
+    private LocalDateTime created;
 
     public int getId() {
         return id;
@@ -62,10 +75,10 @@ public class Post {
     }
 
     public String getCreated() {
-        return created;
+        return created.format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy"));
     }
 
-    public void setCreated(String created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 

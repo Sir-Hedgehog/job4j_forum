@@ -186,7 +186,7 @@
                         <tr class="comments" th:each="comment : ${post.comments}">
                             <td id="infoOfComment">
                                 <br/>
-                                <p>Автор: <span th:text="${comment.user.username}"></span> </p>
+                                <p>Автор: <span th:text="${comment.user.username}"></span></p>
                                 <p>Создан: <span th:text="${comment.created}"></span></p>
                             </td>
                             <td id="containOfComment" th:text="${comment.contain}"></td>
@@ -197,6 +197,7 @@
             <!--/*@thymesVar id="newComment" type="ru.job4j.forum.model.Comment"*/-->
             <form action="#" th:action="@{/commit}" th:object="${newComment}" name='newComment' method='GET'>
                 <input type="hidden" name="postId" th:field="${post.id}"/>
+                <input type="hidden" name="commentId" th:field="${newComment.id}"/>
                 <label for="text">Комментарий: </label>
                 <table>
                     <tbody id="tbodyOfComment">
