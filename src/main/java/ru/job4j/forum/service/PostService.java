@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.Comment;
 import ru.job4j.forum.model.Post;
@@ -18,8 +19,8 @@ import java.util.List;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 10.08.2020
+ * @version 3.0
+ * @since 11.08.2020
  */
 
 @Service
@@ -28,14 +29,16 @@ public class PostService {
     private final CommentRepository commentRepository;
     private final AuthorityRepository authorityRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
     private static final Logger LOG = LoggerFactory.getLogger(PostService.class);
 
     @Autowired
-    public PostService(PostRepository postRepository, CommentRepository commentRepository, AuthorityRepository authorityRepository, UserRepository userRepository) {
+    public PostService(PostRepository postRepository, CommentRepository commentRepository, AuthorityRepository authorityRepository, UserRepository userRepository, PasswordEncoder encoder) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.authorityRepository = authorityRepository;
         this.userRepository = userRepository;
+        this.encoder = encoder;
     }
 
     /**
@@ -103,6 +106,18 @@ public class PostService {
         comment.setCreated(LocalDateTime.now());
         comment.setPost(post);
         commentRepository.save(comment);
+    }
+
+    /**
+     * Метод добавляет нового пользователя в базу данных
+     * @param user - новый пользователь
+     */
+
+    public void addUser(User user) {
+        user.setEnabled(true);
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setAuthority(authorityRepository.findByAuthority("ROLE_USER"));
+        userRepository.save(user);
     }
 
     /**

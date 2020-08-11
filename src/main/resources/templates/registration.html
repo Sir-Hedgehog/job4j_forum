@@ -73,45 +73,49 @@
         }
 
         caption {
-            color: black;
-            font-size: larger;
+            color: #fff;
+            font-size: 1.39em;
             font-weight: 300;
             text-align: center;
             caption-side: top;
-            background-color: #fff;
+            background-color: #2e3d38;
+        }
+
+        label {
+            margin-left: -0.7em;
         }
 
         span {
             color: red;
-            font-size: 0.7em;
+            font-size: small;
             text-align: right;
             display: block;
-            font-style: italic;
+            font-family: unset;
         }
 
         #userError {
-            padding-right: 4.8em;
+            padding-right: 5.5em;
         }
 
         #passwordError {
-            padding-right: 4.2em;
+            padding-right: 4.5em;
         }
 
         form {
             border-radius: 10px 10px 10px 10px;
-            border: 1em solid #fff;
-            background-color: white;
+            border: 1em solid #2e3d38;
+            background-color: #2e3d38;;
         }
 
         table {
-            background-color: #fff;
-            border: 0.5em solid #fff;
+            background-color: #2e3d38;
+            border: 0.5em solid #2e3d38;
         }
 
         table td {
             padding: 0;
             margin: 0;
-            border-bottom: 3px solid #fff;
+            border-bottom: 3px solid #2e3d38;
         }
 
         tbody {
@@ -123,21 +127,25 @@
         }
 
         #sendButton {
-            background-color: #fff;
-            color: #23a843;
-            border-color: #23a843;
+            background-color: #2e3d38;
+            color: white;
+            border-color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
         }
 
         #sendButton:hover {
             color: #fff;
             background-color: #23a843;
+            box-shadow: 0 0 40px -2px rgba(255, 255, 255, 0.6);
+            transition: all 0.5s ease 0s;
+            text-shadow: none;
         }
 
         .text {
             text-align: right;
-            color: black;
+            color: #fff;
             padding: 8px 6px;
-            background-color: #fff;
+            background-color: #2e3d38;
             font-weight: 300;
         }
 
@@ -160,7 +168,7 @@
             <h1>Приветсвуем нового обитателя!</h1>
         </header>
         <section>
-            <!--/*@thymesVar id="user" type="ru.job4j.accidents.model.User"*/-->
+            <!--/*@thymesVar id="user" type="ru.job4j.forum.model.User"*/-->
             <form action="#" th:action="@{/registration}" name='registration' method='POST' th:object="${user}">
                 <table>
                     <caption>
@@ -193,7 +201,9 @@
                         </td>
                     </tr>
                     <tr id="buttons">
-                        <td id="lastTd" colspan='2'><input id="sendButton" class="btn btn-outline-dark" name="submit" type="submit" value="Сохранить"/></td>
+                        <td id="lastTd" colspan='2'>
+                            <input id="sendButton" class="btn btn-outline-dark" name="submit" type="submit" value="Сохранить"/>
+                        </td>
                     </tr>
                 </table>
             </form>
