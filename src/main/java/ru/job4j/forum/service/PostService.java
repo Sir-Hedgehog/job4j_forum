@@ -19,8 +19,8 @@ import java.util.List;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 11.08.2020
+ * @version 4.0
+ * @since 25.08.2020
  */
 
 @Service
@@ -47,6 +47,7 @@ public class PostService {
      */
 
     public List<Post> getAll() {
+        LOG.info("POSTS FOR GET IS: " + postRepository.findAll());
         return postRepository.findAll();
     }
 

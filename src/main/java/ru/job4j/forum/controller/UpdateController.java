@@ -12,8 +12,8 @@ import javax.validation.Valid;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 25.07.2020
+ * @version 2.0
+ * @since 25.08.2020
  */
 
 @Controller
@@ -31,8 +31,9 @@ public class UpdateController {
      * @return - страница с обновленным списком постов пользователя
      */
 
-    @RequestMapping("/delete/{post_id}")
+    @RequestMapping(value = "/delete/{post_id}", method = RequestMethod.GET)
     public String openDeleteForm(@PathVariable(name = "post_id") String id) {
+        LOG.info("POST FOR DELETE: " + posts.findById(id));
         posts.deletePost(posts.findById(id));
         return "redirect:/user_list";
     }
@@ -44,7 +45,7 @@ public class UpdateController {
      * @return - страница редактирования одного из размещенных постов пользователя
      */
 
-    @RequestMapping("/update/{post_id}")
+    @RequestMapping(value = "/update/{post_id}", method = RequestMethod.GET)
     public String openUpdateForm(@PathVariable(name = "post_id") String id, Model model) {
         Post post = posts.findById(id);
         model.addAttribute("post", post);

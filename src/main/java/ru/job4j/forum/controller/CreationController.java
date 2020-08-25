@@ -14,8 +14,8 @@ import javax.validation.Valid;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 25.07.2020
+ * @version 2.0
+ * @since 25.08.2020
  */
 
 @Controller
@@ -51,6 +51,7 @@ public class CreationController {
     @PostMapping("/save")
     public String openValidationOrSaveForm(@Valid @ModelAttribute("post") Post post, BindingResult bindingResult, Model model) {
         String result = "create";
+        LOG.info("POST FOR INSERT IS: " + post);
         if (!bindingResult.hasErrors()) {
             posts.addPost(post);
             model.addAttribute("postName", post.getName());

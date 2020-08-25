@@ -1,23 +1,20 @@
 package ru.job4j.forum.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 10.08.2020
+ * @version 4.0
+ * @since 25.08.2020
  */
 
 @Entity(name = "Users")
 @Table(name = "users")
-@EqualsAndHashCode(exclude = {"posts", "comments"})
-@ToString(exclude = {"posts", "comments"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,5 +96,35 @@ public class User {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return id == user.id
+                && enabled == user.enabled
+                && Objects.equals(username, user.username)
+                && Objects.equals(password, user.password)
+                && Objects.equals(authority, user.authority);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, enabled, authority);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id
+                + ", username='" + username + '\''
+                + ", password='" + password + '\''
+                + ", enabled=" + enabled
+                + ", authority=" + authority + '}';
     }
 }

@@ -1,23 +1,20 @@
 package ru.job4j.forum.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 10.08.2020
+ * @version 4.0
+ * @since 25.08.2020
  */
 
 @Entity(name = "Posts")
 @Table(name = "posts")
-@EqualsAndHashCode(exclude = {"user", "comments"})
-@ToString(exclude = {"user", "comments"})
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,5 +85,33 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Post post = (Post) o;
+        return id == post.id
+                && Objects.equals(name, post.name)
+                && Objects.equals(description, post.description)
+                && Objects.equals(created, post.created);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, created);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" + "id=" + id
+                + ", name='" + name + '\''
+                + ", description='" + description + '\''
+                + ", created=" + created + '}';
     }
 }

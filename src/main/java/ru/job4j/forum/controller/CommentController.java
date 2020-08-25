@@ -13,8 +13,8 @@ import javax.validation.Valid;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 10.08.2020
+ * @version 3.0
+ * @since 25.08.2020
  */
 
 @Controller
@@ -33,7 +33,7 @@ public class CommentController {
      * @return - фронт страницы
      */
 
-    @RequestMapping("/comment/{post_id}")
+    @RequestMapping(value = "/comment/{post_id}", method = RequestMethod.GET)
     public String openCommentForm(@PathVariable(name = "post_id") String id, Model model) {
         Post post = posts.findById(id);
         model.addAttribute("post", post);
@@ -51,6 +51,8 @@ public class CommentController {
     @GetMapping("/commit")
     public String openFormWithNewComment(@ModelAttribute("id") String id, @Valid @ModelAttribute("newComment") Comment newComment, BindingResult bindingResult) {
         Post post = posts.findById(id);
+        LOG.info("POST OF COMMENT: " + post);
+        LOG.info("COMMENT OF POST: " + newComment);
         if (!bindingResult.hasErrors()) {
             posts.createComment(post, newComment);
         }

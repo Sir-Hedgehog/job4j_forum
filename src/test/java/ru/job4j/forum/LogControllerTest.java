@@ -12,12 +12,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version 2.0
+ * @since 25.08.2020
+ */
+
 @SpringBootTest(classes = ForumApplication.class)
 @AutoConfigureMockMvc
 public class LogControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    /**
+     * Метод проверяет страницу аутентификации
+     */
 
     @Test
     @WithMockUser
@@ -28,11 +38,16 @@ public class LogControllerTest {
                 .andExpect(view().name("login"));
     }
 
+    /**
+     * Метод проверяет страницу выхода из форума
+     */
+
     @Test
     @WithMockUser
     public void checkLogoutPage() throws Exception {
         this.mockMvc.perform(get("/logout"))
                 .andDo(print())
+                .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login?logout=true"));
     }
 }
