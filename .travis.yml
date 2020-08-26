@@ -6,12 +6,6 @@ jdk: openjdk12
 services:
   - postgresql
 
-sudo: enabled
-
-before_script:
-  - psql -c "CREATE DATABASE Forum;" -U postgres
-  - sudo -u postgres psql -c "ALTER ROLE postgres WITH password 'password'"
-
 # Отправлять уведомление на почту youremail@smtp.ru (изменить на свою), если сборка упала
 notifications:
   email:
