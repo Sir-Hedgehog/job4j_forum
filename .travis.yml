@@ -6,11 +6,6 @@ jdk: openjdk12
 services:
   - postgresql
 
-before_script:
-    - psql -c "CREATE DATABASE IF NOT EXISTS Forum;" -U postgres;
-    - psql -c "CREATE USER root WITH PASSWORD 'responsibility';" -U postgres;
-    - psql -c "GRANT ALL PRIVILEGES ON DATABASE Forum TO root;" -U postgres;
-
 # Отправлять уведомление на почту youremail@smtp.ru (изменить на свою), если сборка упала
 notifications:
   email:

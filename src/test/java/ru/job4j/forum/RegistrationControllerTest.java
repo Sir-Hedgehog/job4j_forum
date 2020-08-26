@@ -10,11 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import ru.job4j.forum.service.PostService;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
@@ -25,6 +27,9 @@ import org.springframework.util.MultiValueMap;
 @SpringBootTest(classes = ForumApplication.class)
 @AutoConfigureMockMvc
 public class RegistrationControllerTest {
+
+    @MockBean
+    private PostService posts;
 
     @Autowired
     private MockMvc mockMvc;
