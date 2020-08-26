@@ -61,12 +61,12 @@ public class IndexControllerTest {
      * Метод проверяет аутентификацию существующего пользователя
      */
 
-    @Test
+    /*@Test
     @WithMockUser
     public void checkRedirectFromLoginPage() throws Exception {
         this.mockMvc.perform(formLogin().user("root").password("responsibility"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
-    }
+    }*/
 }
