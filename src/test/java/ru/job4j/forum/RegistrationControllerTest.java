@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -25,7 +24,6 @@ import org.springframework.util.MultiValueMap;
 
 @SpringBootTest(classes = ForumApplication.class)
 @AutoConfigureMockMvc
-@WithUserDetails("root")
 public class RegistrationControllerTest {
 
     @Autowired
@@ -50,7 +48,7 @@ public class RegistrationControllerTest {
 
     @Test
     @WithMockUser
-    //@Transactional
+    @Transactional
     public void checkSuccessRegistration() throws Exception {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("username", "username");
