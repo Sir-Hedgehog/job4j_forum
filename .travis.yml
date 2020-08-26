@@ -6,6 +6,10 @@ jdk: openjdk12
 services:
 - postgresql
 
+before_install:
+- psql --version
+- psql -c 'create database Forum;' -U postgres
+
 # Отправлять уведомление на почту youremail@smtp.ru (изменить на свою), если сборка упала
 notifications:
   email:
