@@ -53,7 +53,7 @@ public class RegistrationControllerTest {
 
     @Test
     @WithMockUser
-    @Transactional
+    //@Transactional
     public void checkSuccessRegistration() throws Exception {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("username", "username");
