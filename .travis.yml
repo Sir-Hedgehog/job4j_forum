@@ -4,11 +4,13 @@ language: java
 jdk: openjdk12
 
 services:
-- postgresql
+  - postgresql
 
-before_install:
-- psql --version
-- psql -c 'create database Forum;' -U postgres
+before_script:
+  - psql -c 'create database Forum;' -U postgres
+
+addons:
+  postgresql: "10"
 
 # Отправлять уведомление на почту youremail@smtp.ru (изменить на свою), если сборка упала
 notifications:
