@@ -6,7 +6,7 @@ services:
   - postgresql
 
 before_install:
-- psql -c "CREATE DATABASE IF NOT EXISTS Forum;" -U postgres
+- psql -c 'CREATE DATABASE IF NOT EXISTS Forum;' -U postgres
 
 notifications:
   email:
