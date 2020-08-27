@@ -6,10 +6,10 @@ services:
   - postgresql
 
 before_install:
-  - psql -c 'CREATE DATABASE Forum;' -U postgres
+  - psql -c 'CREATE DATABASE IF NOT EXIST Forum;' -U postgres
 
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email:
@@ -20,6 +20,6 @@ notifications:
 
 env:
   global:
-  - CODECOV_TOKEN="347e52bf-eeaa-427a-955b-12dae69e94b0"
+    - CODECOV_TOKEN="347e52bf-eeaa-427a-955b-12dae69e94b0"
 
 
