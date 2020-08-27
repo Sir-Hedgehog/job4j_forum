@@ -1,4 +1,3 @@
-# используем язык java. Travis CI поддерживает другие языки тоже.
 language: java
 
 jdk: openjdk12
@@ -6,13 +5,13 @@ jdk: openjdk12
 services:
   - postgresql
 
-  before_install:
-  - psql -c "CREATE DATABASE Forum;" -U postgres
+before_install:
+- psql -c "CREATE DATABASE Forum;" -U postgres
 
-# Отправлять уведомление на почту youremail@smtp.ru (изменить на свою), если сборка упала
 notifications:
   email:
     recipients:
       quaresma_08@mail.ru
     on_success: never # default: change
     on_failure: always # default: always
+
