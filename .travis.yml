@@ -5,8 +5,8 @@ jdk: openjdk12
 services:
   - postgresql
 
-before_script:
-- psql -c "CREATE DATABASE Forum;" -U postgres
+before_install:
+- psql -c "CREATE DATABASE IF NOT EXISTS Forum;" -U postgres
 
 notifications:
   email:
