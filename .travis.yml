@@ -6,7 +6,10 @@ services:
   - postgresql
 
 before_install:
-- psql -c 'create database forum;' -U postgres
+  - psql -c 'CREATE DATABASE Forum;' -U postgres
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email:
@@ -14,4 +17,8 @@ notifications:
       quaresma_08@mail.ru
     on_success: never # default: change
     on_failure: always # default: always
+
+env:
+  global:
+  - CODECOV_TOKEN="bcf8f5fe-ccb2-428c-b883-7b4f96be5522"
 

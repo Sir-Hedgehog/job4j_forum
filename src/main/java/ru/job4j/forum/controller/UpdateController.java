@@ -33,7 +33,6 @@ public class UpdateController {
 
     @RequestMapping(value = "/delete/{post_id}", method = RequestMethod.GET)
     public String openDeleteForm(@PathVariable(name = "post_id") String id) {
-        LOG.info("POST FOR DELETE: " + posts.findById(id));
         posts.deletePost(posts.findById(id));
         return "redirect:/user_list";
     }

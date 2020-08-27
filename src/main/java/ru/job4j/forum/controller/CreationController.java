@@ -51,7 +51,6 @@ public class CreationController {
     @PostMapping("/save")
     public String openValidationOrSaveForm(@Valid @ModelAttribute("post") Post post, BindingResult bindingResult, Model model) {
         String result = "create";
-        LOG.info("POST FOR INSERT IS: " + post);
         if (!bindingResult.hasErrors()) {
             posts.addPost(post);
             model.addAttribute("postName", post.getName());
