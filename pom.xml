@@ -149,62 +149,10 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-            <!-- <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.9.0</version>
-                <configuration>
-                    <changeLogFile>${basedir}/src/main/resources/liquibase-changeLog.xml</changeLogFile>
-                    <url>${db.url}</url>
-                    <driver>${db.driver}</driver>
-                    <username>${db.username}</username>
-                    <password>password</password>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin> -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
-    <!-- <profiles>
-        <profile>
-            <id>test</id>
-            <properties>
-                <db.url>jdbc:postgresql://127.0.0.1:5432/Forum</db.url>
-                <db.username>postgres</db.username>
-                <db.password>password</db.password>
-                <db.driver>org.postgresql.Driver</db.driver>
-            </properties>
-        </profile>
-        <profile>
-            <id>production</id>
-            <properties>
-                <db.url>jdbc:postgresql://127.0.0.1:5432/Forum</db.url>
-                <db.username>postgres</db.username>
-                <db.password>password</db.password>
-                <db.driver>org.postgresql.Driver</db.driver>
-            </properties>
-        </profile>
-        <profile>
-            <id>travis</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <db.url>jdbc:postgresql://localhost/Forum</db.url>
-                <db.username>postgres</db.username>
-                <db.password/>
-                <db.driver>org.postgresql.Driver</db.driver>
-            </properties>
-        </profile>
-    </profiles> -->
 </project>
