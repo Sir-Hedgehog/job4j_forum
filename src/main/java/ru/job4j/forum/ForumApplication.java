@@ -29,8 +29,7 @@ public class ForumApplication extends SpringBootServletInitializer {
      * @return - схемы liquibase
      */
 
-    @LiquibaseDataSource
-    @Bean(name = "Forum")
+    @Bean
     public SpringLiquibase liquibase(final DataSource datasource) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setChangeLog("classpath:liquibase-changeLog.xml");
