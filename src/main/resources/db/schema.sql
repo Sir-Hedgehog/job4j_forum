@@ -3,7 +3,7 @@ CREATE TABLE authorities (
   authority VARCHAR(50) NOT NULL unique
 );
 
-CREATE TABLE if not exists users (
+CREATE TABLE users (
   id serial primary key,
   username VARCHAR(50) NOT NULL unique,
   password VARCHAR(100) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE if not exists users (
   authority_id int not null references authorities(id)
 );
 
-CREATE TABLE if not exists posts (
+CREATE TABLE posts (
   id serial primary key,
   name varchar(2000),
   description varchar(200000),
@@ -19,7 +19,7 @@ CREATE TABLE if not exists posts (
   user_id int references users(id)
 );
 
-CREATE TABLE if not exists comments (
+CREATE TABLE comments (
   id serial primary key,
   contain varchar(200000),
   created timestamp without time zone not null default now(),

@@ -175,7 +175,7 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
+    <!-- <profiles>
         <profile>
             <id>test</id>
             <properties>
@@ -206,5 +206,5 @@
                 <db.driver>org.postgresql.Driver</db.driver>
             </properties>
         </profile>
-    </profiles>
+    </profiles> -->
 </project>
