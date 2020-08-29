@@ -8,8 +8,8 @@ services:
 before_install:
   - psql -c 'CREATE DATABASE Forum;' -U postgres
 
-addons:
-  postgresql: '10'
+# addons:
+#  postgresql: '10'
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

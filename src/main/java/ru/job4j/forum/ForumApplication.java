@@ -2,6 +2,7 @@ package ru.job4j.forum;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseDataSource;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,7 @@ public class ForumApplication extends SpringBootServletInitializer {
      * @return - схемы liquibase
      */
 
+    @LiquibaseDataSource
     @Bean(name = "Forum")
     public SpringLiquibase liquibase(final DataSource datasource) {
         SpringLiquibase liquibase = new SpringLiquibase();
