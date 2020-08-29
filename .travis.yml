@@ -2,6 +2,9 @@ language: java
 
 jdk: openjdk12
 
+services:
+  - postgresql
+
 before_install:
   - psql -c 'create database Forum;' -U postgres
 
