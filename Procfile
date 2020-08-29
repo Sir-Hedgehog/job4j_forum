@@ -1,1 +1,1 @@
-web: java -jar target/forum-1.jar --spring.config.location=heroku.properties
+web:    java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --spring.config.location=heroku.properties --port $PORT target/*.jar
