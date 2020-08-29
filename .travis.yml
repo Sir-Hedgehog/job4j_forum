@@ -5,7 +5,7 @@ jdk: openjdk12
 services:
   - postgresql
 
-before_install:
+before_script:
   - psql -c 'CREATE DATABASE Forum;' -U postgres
 
 # addons:
