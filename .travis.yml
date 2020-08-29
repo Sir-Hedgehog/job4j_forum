@@ -6,10 +6,7 @@ services:
   - postgresql
 
 before_script:
-  - psql -c 'create database Forum;' -U postgres
-
-# addons:
-#  postgresql: '10'
+  - psql -c 'create database forum;' -U postgres
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
