@@ -6,7 +6,7 @@ services:
   - postgresql
 
 before_script:
-  - psql -c 'create database forum;' -U postgres
+  - psql -c 'create database Forum;' -U postgres
 
 # addons:
 #  postgresql: '10'

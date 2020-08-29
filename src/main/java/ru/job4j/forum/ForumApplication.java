@@ -1,5 +1,6 @@
 package ru.job4j.forum;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseDataSource;
@@ -25,15 +26,15 @@ public class ForumApplication extends SpringBootServletInitializer {
 
     /**
      * Метод указывает на работу со схемами liquibase
-     * @param datasource - целевая база данных
+     * @param dataSource - целевая база данных
      * @return - схемы liquibase
      */
 
     @Bean
-    public SpringLiquibase liquibase(final DataSource datasource) {
+    public SpringLiquibase liquibase(@Qualifier("dataSource") DataSource dataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setChangeLog("classpath:liquibase-changeLog.xml");
-        liquibase.setDataSource(datasource);
+        liquibase.setDataSource(dataSource);
         return liquibase;
     }
 
