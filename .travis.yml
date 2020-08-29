@@ -6,7 +6,7 @@ services:
   - postgresql
 
 before_install:
-  - psql -c 'create database Forum;' -U postgres
+  - psql -c 'CREATE DATABASE Forum;' -U postgres
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
