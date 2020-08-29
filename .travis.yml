@@ -10,10 +10,6 @@ before_install:
 
 addons:
   postgresql: '11'
-  apt:
-      packages:
-        - postgresql-11
-        - postgresql-client-11
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
