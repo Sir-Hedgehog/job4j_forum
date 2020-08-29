@@ -200,7 +200,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <db.url>jdbc:postgresql://localhost/Forum</db.url>
+                <db.url>jdbc:postgresql://localhost/forum</db.url>
                 <db.username>postgres</db.username>
                 <db.password/>
                 <db.driver>org.postgresql.Driver</db.driver>
