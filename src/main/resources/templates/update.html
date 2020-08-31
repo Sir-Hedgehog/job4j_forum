@@ -95,7 +95,7 @@
                 <h1 id="header">Обновление поста</h1>
             </div>
             <!--/*@thymesVar id="post" type="ru.job4j.forum.model.Post"*/-->
-            <form action="#" th:action="@{/fix}" th:object="${post}" method="GET">
+            <form action="#" th:action="@{/fix}" th:object="${post}" method="POST">
                 <input type="hidden" name="id" th:field="*{id}"/>
                 <section>
                     <div class="form-group">
