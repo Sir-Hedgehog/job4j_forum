@@ -11,6 +11,8 @@ This webapp realizes forum with using of principle of MVC (model-view-controller
 ## Use cases
 1) This app can be pushed and used with any development environment that supports Java (IntellijIDEA, Eclipse, others).
 
+2) Follow the link [Galaxy forum](https://galaxy_forum.herokuapp.com "Galaxy forum") and enjoy to use app!
+
 ## Steps of work
 After you pushed webapp, you can use it. Steps of work are next:
 
