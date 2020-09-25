@@ -20,8 +20,8 @@ import java.util.List;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 4.0
- * @since 25.08.2020
+ * @version 5.0
+ * @since 25.09.2020
  */
 
 @Service
@@ -58,7 +58,6 @@ public class PostService {
 
     public void addPost(Post post) {
         post.setUser(this.certainCurrentUser());
-        LOG.info("STRING OF LOCAL DATE TIME IN SET: " + LocalDateTime.now());
         post.setCreated(LocalDateTime.now(ZoneId.of("Europe/Moscow")));
         postRepository.save(post);
     }

@@ -76,11 +76,7 @@ public class Post {
     }
 
     public String getCreated() {
-        /*ZonedDateTime zonedUTC = created.atZone(ZoneId.of("UTC"));
-        ZonedDateTime zonedIST = zonedUTC.withZoneSameInstant(ZoneId.of("Europe/Moscow"));*/
-        String result = created.format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy"));
-        LOG.info("STRING OF LOCAL DATE TIME IN GET: " + result);
-        return result;
+        return created.format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy"));
     }
 
     public void setCreated(LocalDateTime created) {
