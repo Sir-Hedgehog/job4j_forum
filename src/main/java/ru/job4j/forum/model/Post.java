@@ -1,5 +1,7 @@
 package ru.job4j.forum.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -16,6 +18,8 @@ import java.util.Objects;
 @Entity(name = "Posts")
 @Table(name = "posts")
 public class Post {
+    private static final Logger LOG = LoggerFactory.getLogger(Post.class);
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -72,7 +76,11 @@ public class Post {
     }
 
     public String getCreated() {
-        return created.format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy"));
+        /*ZonedDateTime zonedUTC = created.atZone(ZoneId.of("UTC"));
+        ZonedDateTime zonedIST = zonedUTC.withZoneSameInstant(ZoneId.of("Europe/Moscow"));*/
+        String result = created.format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy"));
+        LOG.info("STRING OF LOCAL DATE TIME IN GET: " + result);
+        return result;
     }
 
     public void setCreated(LocalDateTime created) {

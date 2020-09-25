@@ -14,7 +14,7 @@ insert
     into
         users (username, password, enabled, authority_id)
     values
-        ('root', '$2a$10$iT6N/9fbtebNEYUyYW4aLOt8CIrs.2OTdOApl723fE1T83gPxJBOK', true, (select id from authorities where authority = 'ROLE_ADMIN'));
+        ('root', '$2a$10$qn83UbXhBZT3Wixq.ECOYO6bDRrZLIOAoQG./Tra7N4BYxiUe3k6i', true, (select id from authorities where authority = 'ROLE_ADMIN'));
 
 insert
     into

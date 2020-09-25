@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @Controller
 public class CommentController {
     private final PostService posts;
-    private static final Logger LOG = LoggerFactory.getLogger(PostService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CommentController.class);
 
     public CommentController(PostService posts) {
         this.posts = posts;

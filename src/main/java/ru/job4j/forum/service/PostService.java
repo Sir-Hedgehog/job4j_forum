@@ -15,6 +15,7 @@ import ru.job4j.forum.repository.CommentRepository;
 import ru.job4j.forum.repository.PostRepository;
 import ru.job4j.forum.repository.UserRepository;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 /**
@@ -47,7 +48,6 @@ public class PostService {
      */
 
     public List<Post> getAll() {
-        LOG.info("POSTS FOR GET IS: " + postRepository.findAll());
         return postRepository.findAll();
     }
 
@@ -58,7 +58,8 @@ public class PostService {
 
     public void addPost(Post post) {
         post.setUser(this.certainCurrentUser());
-        post.setCreated(LocalDateTime.now());
+        LOG.info("STRING OF LOCAL DATE TIME IN SET: " + LocalDateTime.now());
+        post.setCreated(LocalDateTime.now(ZoneId.of("Europe/Moscow")));
         postRepository.save(post);
     }
 
@@ -80,7 +81,7 @@ public class PostService {
 
     public void updatePost(Post post) {
         post.setUser(this.certainCurrentUser());
-        post.setCreated(LocalDateTime.now());
+        post.setCreated(LocalDateTime.now(ZoneId.of("Europe/Moscow")));
         postRepository.save(post);
         commentRepository.saveCommentsForUpdatedPost(post.getId());
     }
@@ -104,7 +105,7 @@ public class PostService {
     public void createComment(Post post, Comment comment) {
         comment.setId(0);
         comment.setUser(this.certainCurrentUser());
-        comment.setCreated(LocalDateTime.now());
+        comment.setCreated(LocalDateTime.now(ZoneId.of("Europe/Moscow")));
         comment.setPost(post);
         commentRepository.save(comment);
     }

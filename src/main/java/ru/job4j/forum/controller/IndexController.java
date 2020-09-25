@@ -21,7 +21,7 @@ import java.util.List;
 @Controller
 public class IndexController {
     private final PostService posts;
-    private static final Logger LOG = LoggerFactory.getLogger(CreationController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(IndexController.class);
 
     public IndexController(PostService posts) {
         this.posts = posts;
