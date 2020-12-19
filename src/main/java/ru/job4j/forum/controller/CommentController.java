@@ -2,6 +2,7 @@ package ru.job4j.forum.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,7 +50,7 @@ public class CommentController {
      */
 
     @GetMapping("/commit")
-    public String openFormWithNewComment(@ModelAttribute("id") String id, @Valid @ModelAttribute("newComment") Comment newComment, BindingResult bindingResult) {
+    public String openFormWithNewComment(@PageableDefault @ModelAttribute("id") String id, @Valid @ModelAttribute("newComment") Comment newComment, BindingResult bindingResult) {
         Post post = posts.findById(id);
         if (!bindingResult.hasErrors()) {
             posts.createComment(post, newComment);
